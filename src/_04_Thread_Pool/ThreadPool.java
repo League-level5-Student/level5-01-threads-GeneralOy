@@ -9,7 +9,7 @@ public class ThreadPool {
 		threads = new Thread[totalThreads];
 		// TODO Auto-generated constructor stub
 		for(int i = 0; i < totalThreads; i++) {
-			threads[i] = new Thread(()-> {Worker worker = new Worker(taskQueue);});
+			threads[i] = new Thread(()-> {Worker worker = new Worker(taskQueue); worker.run();});
 		}
 		taskQueue = new ConcurrentLinkedQueue<Task>();
 	}
@@ -19,6 +19,7 @@ public class ThreadPool {
 
 	public void start() {
 		for(Thread t : threads) {
+			//System.out.println(threads.length);
 			t.run();
 		}
 		try {

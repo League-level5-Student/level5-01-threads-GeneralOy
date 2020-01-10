@@ -21,9 +21,9 @@ public class ThreadPoolTest {
 
 	@Test
 	public void test() {
-		int total = 1000000;
+		int total = 10000;
 
-		ThreadPool tp = new ThreadPool(4);
+		ThreadPool tp = new ThreadPool(total);
 		char[] chars = new char[total];
 
 		for (int i = 0; i < total; i++) {
@@ -31,25 +31,34 @@ public class ThreadPoolTest {
 		}
 
 		int count = (int) Math.sqrt(total);
-
+		//System.out.println(total);
+		//System.out.println((int)Math.sqrt(total));
+		//System.out.println(count);
 		for (int i = 0; i < count; i++) {
 			int x = i * count;
+			System.out.println(count);
+			//System.out.println(i + "," + x);
 			tp.addTask(() -> {
 				for (int j = 0; j < count; j++) {
 					chars[x + j] = Character.toUpperCase(chars[x + j]);
+					//System.out.println(x+j);
 				}
+				
 			});
+			//System.out.println(tp.taskQueue.size());
+			//System.out.println(tp.threads.length);
 		}
 
 		long start = System.currentTimeMillis();
-
+		//System.out.println(chars);
 		tp.start();
 
 		long end = System.currentTimeMillis() - start;
+		System.out.println(chars);
 		System.out.println("Total time: " + end);
-
 		for (char c : chars) {
 			assertTrue(Character.isUpperCase(c));
+			
 		}
 	}
 }
